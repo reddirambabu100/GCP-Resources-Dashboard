@@ -1,68 +1,77 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { TextField, Button, Box, Typography, Container, Alert } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { TextField, Button, Paper, Typography, Box } from "@mui/material";
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const [loginError, setLoginError] = useState(null);
-  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
+  // const navigate = useNavigate();
 
-  const onSubmit = async () => {
-    navigate("/"); // Redirect to dashboard
-    // Mock authentication (Replace with actual API call)
-    // if (data.email === "admin@example.com" && data.password === "password123") {
-    //   localStorage.setItem("token", "mock-token"); // Store token (use real JWT in production)
-    //   navigate("/dashboard"); // Redirect to dashboard
-    // } else {
-    //   setLoginError("Invalid email or password.");
-    // }
+  // Mock authentication function
+  const handleLogin = () => {
+    const { username, password } = credentials;
+    
+    // Mock user authentication (Replace with API call)
+    if (username === "admin" && password === "password") {
+      localStorage.setItem("token", "mock-token"); // Save token
+      // navigate("/dashboard"); // Redirect to dashboard
+      window.location.href = "/dashboard";
+    } else {
+      setError("Invalid username or password"); // Show error
+    }
   };
 
   return (
-    <Container maxWidth="xs">
-      <Box
-        sx={{
-          mt: 10,
-          p: 4,
-          boxShadow: 3,
-          borderRadius: 2,
-          backgroundColor: "white",
-          textAlign: "center",
-        }}
-      >
+    <Box 
+      display="flex" 
+      justifyContent="center" 
+      alignItems="center" 
+      height="100vh"
+      bgcolor="#f5f5f5"
+    >
+      <Paper elevation={3} sx={{ padding: 4, width: 350, textAlign: "center" }}>
         <Typography variant="h5" gutterBottom>
-          Login to LBG CloudPulse
+          LBG CloudPulse - Login
         </Typography>
+        
+        {/* Username Input */}
+        <TextField
+          label="Username"
+          fullWidth
+          margin="normal"
+          value={credentials.username}
+          onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+        />
+        
+        {/* Password Input */}
+        <TextField
+          label="Password"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={credentials.password}
+          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+        />
 
-        {loginError && <Alert severity="error">{loginError}</Alert>}
+        {/* Error Message */}
+        {error && (
+          <Typography color="error" sx={{ mt: 1 }}>
+            {error}
+          </Typography>
+        )}
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <TextField
-            fullWidth
-            label="Email"
-            margin="normal"
-            {...register("email", { required: "Email is required", pattern: { value: /\S+@\S+\.\S+/, message: "Invalid email" } })}
-            error={!!errors.email}
-            helperText={errors.email?.message}
-          />
-
-          <TextField
-            fullWidth
-            label="Password"
-            type="password"
-            margin="normal"
-            {...register("password", { required: "Password is required", minLength: { value: 6, message: "At least 6 characters" } })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
-          />
-
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 2 }}>
-            Login
-          </Button>
-        </form>
-      </Box>
-    </Container>
+        {/* Login Button */}
+        <Button 
+          variant="contained" 
+          color="primary" 
+          fullWidth 
+          sx={{ mt: 2 }} 
+          onClick={handleLogin}
+        >
+          Login
+        </Button>
+      </Paper>
+    </Box>
   );
 };
 

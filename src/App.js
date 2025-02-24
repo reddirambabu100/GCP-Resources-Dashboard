@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { NotificationProvider } from "./context/NotificationContext";
 import Login from "./components/Login/Login";
 import Main from "./components/Main/Main";
@@ -11,20 +11,31 @@ import Opportunities from "./components/Opportunities/Opportunities";
 import GreenSwitch from "./components/GreenSwitch/GreenSwitch";
 import NotificationHistory from "./components/NotificationHistory/NotificationHistory";
 
+// Function to check if user is authenticated
+const isAuthenticated = () => {
+  return localStorage.getItem("token") !== null;
+};
+
 function App() {
   return (
     <NotificationProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Main />}>
-          <Route index element={<Dashboard />} />
-          <Route path="resources" element={<Resources />} />
-          <Route path="utilization" element={<Utilization />} />
-          <Route path="cost" element={<Cost />} />
-          <Route path="opportunities" element={<Opportunities />} />
-          <Route path="greenswitch" element={<GreenSwitch />} />
-          <Route path="notificationHistory" element={<NotificationHistory />} />
+          {/* Redirect "/" to "/login" if not authenticated */}
+          <Route path="/" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+
+          {/* Login Page (Visible Only If Not Logged In) */}
+          <Route path="/login" element={isAuthenticated() ? <Navigate to="/dashboard" /> : <Login />} />
+
+          {/* Main Layout Wrapping All Protected Routes */}
+          <Route element={isAuthenticated() ? <Main /> : <Navigate to="/login" />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/utilization" element={<Utilization />} />
+            <Route path="/cost" element={<Cost />} />
+            <Route path="/opportunities" element={<Opportunities />} />
+            <Route path="/greenswitch" element={<GreenSwitch />} />
+            <Route path="/notificationHistory" element={<NotificationHistory />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Outlet } from 'react-router-dom';
 import { useNotification } from '../../context/NotificationContext';
+// import { useNavigate } from "react-router-dom";
 import {
   AppBar,
   Box,
@@ -23,13 +24,15 @@ import {
   BarChart as UtilizationIcon, 
   AttachMoney as CostIcon, 
   Lightbulb as OpportunitiesIcon, 
-  PowerSettingsNew as GreenSwitchIcon 
+  PowerSettingsNew as GreenSwitchIcon ,
+  Logout
 } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 
-const drawerWidth = 240;
+const drawerWidth = 240; // Set the width of the sidebar drawer
 
+// Define menu items for navigation
 const menuItems = [
   { text: 'Dashboard', path: '/', icon: <DashboardIcon /> },
   { text: 'Resources', path: '/resources', icon: <ResourcesIcon /> },
@@ -41,15 +44,25 @@ const menuItems = [
 ];
 
 export default function Main() {
-  const { notificationHistory } = useNotification();
-  const [open, setOpen] = React.useState(true);
+  // const navigate = useNavigate(); // Hook for navigation
+  const { notificationHistory } = useNotification(); // Access notification history
+  const [open, setOpen] = React.useState(true); // State for controlling sidebar open/close
 
+  // Function to toggle the sidebar drawer
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
+   // Logout function
+   const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove auth token
+    window.location.href = "/login"; // Force reload & redirect
+  };
+  
+
   return (
     <Box sx={{ display: 'flex' }}>
+      {/* Top Navigation Bar */}
       <AppBar 
         position="fixed" 
         sx={{ 
@@ -59,33 +72,49 @@ export default function Main() {
         }}
       >
         <Toolbar>
+          {/* Sidebar Toggle Button */}
           <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerToggle} edge="start">
             <MenuIcon />
           </IconButton>
+          
+          {/* Application Title */}
           <Typography variant="h6" sx={{ flexGrow: 1, ml: 2 }}>
             LBG CloudPulse
           </Typography>
+
+          {/* Notification Icon with Badge */}
           <IconButton color="inherit" component={Link} to="/notificationHistory">
             <Badge badgeContent={notificationHistory.length} color="error">
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <IconButton edge="end" color="inherit">
+
+          {/* User Profile Icon */}
+          <IconButton  color="inherit">
             <AccountCircle />
+          </IconButton>
+
+          {/* Logout Button */}
+          <IconButton edge="end" color="inherit" onClick={handleLogout}>
+            <Logout />
           </IconButton>
         </Toolbar>
       </AppBar>
 
+      {/* Sidebar Drawer */}
       <Drawer 
         variant="persistent" 
         anchor="left" 
         open={open} 
         sx={{ '& .MuiDrawer-paper': { width: drawerWidth, backgroundColor: "#099162" } }}
       >
+        {/* Sidebar Header */}
         <IconButton sx={{ alignSelf: 'center', color: "white", margin: 1 }}>
           GCP Resource
         </IconButton>
         <Divider />
+
+        {/* Sidebar Menu Items */}
         <List>
           {menuItems.map(({ text, path, icon }) => (
             <ListItem button key={text} component={Link} to={path} sx={{ color: 'white' }}>
@@ -96,6 +125,7 @@ export default function Main() {
         </List>
       </Drawer>
 
+      {/* Main Content Area */}
       <Box 
         component="main" 
         sx={{ 
@@ -106,8 +136,8 @@ export default function Main() {
           width: open ? `calc(100% - ${drawerWidth}px)` : '100%' 
         }}
       >
-        <Toolbar />
-        <Outlet />
+        <Toolbar /> {/* Spacer to push content below AppBar */}
+        <Outlet /> {/* This will render the child components of Main */}
       </Box>
     </Box>
   );
