@@ -35,7 +35,7 @@ const drawerWidth = 240; // Set the width of the sidebar drawer
 
 // Define menu items for navigation
 const menuItems = [
-  { text: 'Dashboard', path: '/', icon: <DashboardIcon /> },
+  { text: 'Dashboard', path: '/dashboard', icon: <DashboardIcon /> },
   { text: 'Resources', path: '/resources', icon: <ResourcesIcon /> },
   { text: 'Utilization', path: '/utilization', icon: <UtilizationIcon /> },
   { text: 'Cost', path: '/cost', icon: <CostIcon /> },
