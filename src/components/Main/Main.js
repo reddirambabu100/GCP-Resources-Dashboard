@@ -10,7 +10,7 @@ import {
   IconButton,
   Badge,
   Drawer,
-  Divider,
+  // Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -25,7 +25,8 @@ import {
   AttachMoney as CostIcon, 
   Lightbulb as OpportunitiesIcon, 
   PowerSettingsNew as GreenSwitchIcon ,
-  Logout
+  Logout,
+  Close as CloseIcon
 } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
@@ -46,7 +47,7 @@ const menuItems = [
 export default function Main() {
   // const navigate = useNavigate(); // Hook for navigation
   const { notificationHistory } = useNotification(); // Access notification history
-  const [open, setOpen] = React.useState(true); // State for controlling sidebar open/close
+  const [open, setOpen] = React.useState(false); // State for controlling sidebar open/close
 
   // Function to toggle the sidebar drawer
   const handleDrawerToggle = () => {
@@ -74,7 +75,7 @@ export default function Main() {
         <Toolbar>
           {/* Sidebar Toggle Button */}
           <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerToggle} edge="start">
-            <MenuIcon />
+              {open ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
           
           {/* Application Title */}
@@ -106,23 +107,26 @@ export default function Main() {
         variant="persistent" 
         anchor="left" 
         open={open} 
-        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, backgroundColor: "#099162" } }}
+        sx={{ '& .MuiDrawer-paper': { width: drawerWidth, backgroundColor: "white" } }}
       >
+        <Toolbar sx={{backgroundColor:"#099162"}}>
         {/* Sidebar Header */}
-        <IconButton sx={{ alignSelf: 'center', color: "white", margin: 1 }}>
+        <IconButton sx={{ alignSelf: 'center', color: "white", margin: 1  }}>
           GCP Resource
         </IconButton>
-        <Divider />
+        </Toolbar>
+        {/* <Divider /> */}
 
         {/* Sidebar Menu Items */}
-        <List>
+        <List sx={{backgroundColor:"white"}}>
           {menuItems.map(({ text, path, icon }) => (
-            <ListItem button key={text} component={Link} to={path} sx={{ color: 'white' }}>
-              <ListItemIcon sx={{ color: 'white' }}>{icon}</ListItemIcon>
+            <ListItem button key={text} component={Link} to={path} sx={{ color: 'black' }}>
+              <ListItemIcon sx={{ color: 'black' }}>{icon}</ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
           ))}
         </List>
+        
       </Drawer>
 
       {/* Main Content Area */}
