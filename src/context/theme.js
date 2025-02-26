@@ -4,24 +4,24 @@ const theme = createTheme({
   
   palette: {
     mode: 'light',
-    primary: { main: '#099162' },
+    primary: { main: '#0081FF' },
     secondary: { main: '#FFC107' },
-    background: { default: '#f5f5f5', paper: '#ffffff' },
+    background: { default: '#0081FF', paper: '#ffffff' },
     text: { primary: '#333333', secondary: '#555555' },
   },
   typography: {
-    fontFamily: '"Poppins", "Roboto", "Arial", sans-serif',
-    h1: { fontSize: '40px', fontWeight: 700, letterSpacing: '-0.5px' },
-    h2: { fontSize: '32px', fontWeight: 700, letterSpacing: '-0.5px' },
-    h3: { fontSize: '28px', fontWeight: 600 },
-    h4: { fontSize: '24px', fontWeight: 600 },
-    h5: { fontSize: '20px', fontWeight: 500 },
-    h6: { fontSize: '18px', fontWeight: 500 },
-    body1: { fontSize: '16px', lineHeight: 1.6 },
-    body2: { fontSize: '14px', lineHeight: 1.6 },
+    fontFamily: 'Sans SemiBold, sans-serif',
+    h1: { fontSize: '42px', fontWeight: 500, letterSpacing: '-0.5px' , lineHeight:'52px'},
+    h2: { fontSize: '36px', fontWeight: 400, letterSpacing: '-0.5px' },
+    h3: { fontSize: '30px', fontWeight: 300 },
+    h4: { fontSize: '24px', fontWeight: 250 },
+    h5: { fontSize: '18px', fontWeight: 200 },
+    h6: { fontSize: '16px', fontWeight: 100 },
+    body1: { fontSize: '14px', lineHeight: 1.6 },
+    body2: { fontSize: '12px', lineHeight: 1.6 },
     button: { textTransform: 'none', fontWeight: 500 },
-    p1: { fontSize: '16px', lineHeight: 1.8, fontWeight: 400, color: '#444' }, // Paragraph style 1
-    p2: { fontSize: '14px', lineHeight: 1.7, fontWeight: 400, color: '#666' }, // Paragraph style 2
+    p1: { fontSize: '14px', lineHeight: 1.8, fontWeight: 400, color: '#444' }, // Paragraph style 1
+    p2: { fontSize: '12px', lineHeight: 1.7, fontWeight: 400, color: '#666' }, // Paragraph style 2
   },
   
   components: {

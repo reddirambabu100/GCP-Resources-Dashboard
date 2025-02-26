@@ -14,7 +14,7 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,Avatar 
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -26,7 +26,8 @@ import {
   Lightbulb as OpportunitiesIcon, 
   PowerSettingsNew as GreenSwitchIcon ,
   Logout,
-  Close as CloseIcon
+  ArrowBack,
+  ChevronLeft
 } from '@mui/icons-material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
@@ -69,13 +70,14 @@ export default function Main() {
         sx={{ 
           width: open ? `calc(100% - ${drawerWidth}px)` : '100%', 
           transition: 'width 0.3s', 
-          backgroundColor: "#099162"
+          backgroundColor: "#099162",
+          height:"64px"
         }}
       >
-        <Toolbar>
+        <Toolbar sx={{ height: "104px" }}>
           {/* Sidebar Toggle Button */}
           <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerToggle} edge="start">
-              {open ? <CloseIcon /> : <MenuIcon />}
+              {open ? <ChevronLeft /> : <MenuIcon />}
           </IconButton>
           
           {/* Application Title */}
@@ -109,12 +111,15 @@ export default function Main() {
         open={open} 
         sx={{ '& .MuiDrawer-paper': { width: drawerWidth, backgroundColor: "white" } }}
       >
-        <Toolbar sx={{backgroundColor:"#099162"}}>
-        {/* Sidebar Header */}
-        <IconButton sx={{ alignSelf: 'center', color: "white", margin: 1  }}>
-          GCP Resource
-        </IconButton>
+        <Toolbar sx={{ backgroundColor: "#099162", display: "flex", justifyContent: "center", p: 1 , height:"64px" }}>
+          <img 
+            src="https://lloydstechnologycentre.com/assets/site/ltc-new-logo.svg" 
+            alt="Lloyds Logo" 
+            style={{ width: "180px", height: "auto", maxWidth: "100%" }} // Adjust width, maintain aspect ratio
+          />
         </Toolbar>
+
+
         {/* <Divider /> */}
 
         {/* Sidebar Menu Items */}
