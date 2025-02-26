@@ -75,7 +75,7 @@ const GreenSwitch = () => {
 
   return (
     <Container sx={{ mt: 3 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>Green Switch - Auto Cleanup</Typography>
+      <Typography variant="h5" sx={{ mb: 2 }} fontWeight={"bold"}>Green Switch - Auto Cleanup</Typography>
 
       {Object.keys(resources).map((project) => (
         <Accordion 

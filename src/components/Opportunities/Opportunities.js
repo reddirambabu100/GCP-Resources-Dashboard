@@ -51,7 +51,7 @@ const Opportunities = () => {
 
   return (
     <Container sx={{ mt: 3 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>Opportunities for Improvement</Typography>
+      <Typography variant="h5" sx={{ mb: 2 }} fontWeight={"bold"}>Opportunities for Improvement</Typography>
 
       {Object.keys(opportunitiesData).map((project) => (
         <Accordion key={project} defaultExpanded>

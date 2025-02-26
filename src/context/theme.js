@@ -10,7 +10,7 @@ const theme = createTheme({
     text: { primary: '#333333', secondary: '#555555' },
   },
   typography: {
-    fontFamily: 'Sans SemiBold, sans-serif',
+    fontFamily: "Roboto",
     h1: { fontSize: '42px', fontWeight: 500, letterSpacing: '-0.5px' , lineHeight:'52px'},
     h2: { fontSize: '36px', fontWeight: 400, letterSpacing: '-0.5px' },
     h3: { fontSize: '30px', fontWeight: 300 },

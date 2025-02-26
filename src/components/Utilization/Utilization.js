@@ -78,7 +78,7 @@ const utilizationData = {
 const Utilization = () => {
   return (
     <Container sx={{ mt: 3 }}>
-      <Typography variant="h6" sx={{ mb: 2 }}>
+      <Typography variant="h6" sx={{ mb: 2 }} fontWeight={"bold"}>
         Resource Utilization (Project-wise & Resource-wise)
       </Typography>
 

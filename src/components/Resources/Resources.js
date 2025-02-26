@@ -111,7 +111,7 @@ const ResourcesDashboard = () => {
   return (
     <Container sx={{ mt: 3 }}>
       {/* Dashboard Title */}
-      <Typography variant="h5" sx={{ mb: 2 }}>LBG CloudPulse Resources </Typography>
+      <Typography variant="h5" sx={{ mb: 2 }} fontWeight={"bold"}>LBG CloudPulse Resources </Typography>
 
       {/* Project Selection Dropdown */}
       <Select value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} sx={{ mb: 3 }}>

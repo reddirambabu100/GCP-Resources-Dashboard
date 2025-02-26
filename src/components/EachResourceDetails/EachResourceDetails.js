@@ -28,7 +28,7 @@ const EachResourceDetails = () => {
   return (
     <Container sx={{ mt: 3 }}>
       <Paper sx={{ p: 3 }}>
-        <Typography variant="h4" gutterBottom>
+        <Typography variant="h4" gutterBottom fontWeight={"bold"}>
           Resource Details
         </Typography>
         <Divider sx={{ mb: 2 }} />

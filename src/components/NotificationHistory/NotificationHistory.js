@@ -28,7 +28,7 @@ const NotificationHistory = () => {
 
   return (
     <Grid container spacing={2} sx={{ mt: 2 }}>
-      <Typography variant="h5" sx={{ color: "gray", m: 2 }}>
+      <Typography fontWeight={"bold"} variant="h5" sx={{ color: "gray", m: 2 }}>
           Notifications
         </Typography>
       {notificationHistory.length > 0 ? (

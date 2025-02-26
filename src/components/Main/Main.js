@@ -82,8 +82,8 @@ export default function Main() {
           </IconButton>
           
           {/* Application Title */}
-          <Typography variant="h6" sx={{ flexGrow: 1, ml: 2 }}>
-            LBG CloudPulse
+          <Typography fontWeight={"bold"} variant="h5" sx={{ flexGrow: 1, ml: 2}}>
+            LBG CLOUDPULSE
           </Typography>
 
           {/* Notification Icon with Badge */}

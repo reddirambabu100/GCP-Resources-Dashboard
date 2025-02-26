@@ -24,7 +24,7 @@ const resourceCostData = [
 const Cost = () => {
   return (
     <Container sx={{ mt: 3 }}>
-      <Typography variant="h5" sx={{ mb: 2 }}>GCP Cost Monitoring</Typography>
+      <Typography fontWeight={"bold"} variant="h5" sx={{ mb: 2 }}>GCP Cost Monitoring</Typography>
 
       {/* Monthly Cost Bar Chart */}
       <Paper sx={{ p: 2, mb: 3 }}>

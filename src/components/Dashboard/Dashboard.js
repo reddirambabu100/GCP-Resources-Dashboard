@@ -25,7 +25,7 @@ export default function Dashboard() {
     <>
       
     <Container sx={{ marginTop: 4 }}>
-      <Typography variant="h4" fontWeight="bold" mb={4}>LBG CloudPulse-Dashboard</Typography>
+      <Typography variant="h4" fontWeight={"bold"} mb={4}>LBG CloudPulse-Dashboard</Typography>
       <Grid container spacing={3}>
         {cardItems.map((card , index) => ( 
             <Grid item xs={12} sm={6} md={4} key={index}>
