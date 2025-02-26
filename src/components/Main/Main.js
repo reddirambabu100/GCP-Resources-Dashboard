@@ -27,8 +27,9 @@ import {
   PowerSettingsNew as GreenSwitchIcon ,
   Logout,
   ArrowBack,
-  ChevronLeft
+  ChevronLeft,MenuOpen as MenuOpenIcon
 } from '@mui/icons-material';
+
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import { Link } from 'react-router-dom';
 
@@ -70,14 +71,14 @@ export default function Main() {
         sx={{ 
           width: open ? `calc(100% - ${drawerWidth}px)` : '100%', 
           transition: 'width 0.3s', 
-          backgroundColor: "#4698E8",
+          backgroundColor: "#006a4d",
           height:"64px"
         }}
       >
         <Toolbar sx={{ height: "104px" }}>
           {/* Sidebar Toggle Button */}
           <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerToggle} edge="start">
-              {open ? <ChevronLeft /> : <MenuIcon />}
+              {open ? <MenuOpenIcon /> : <MenuIcon />}
           </IconButton>
           
           {/* Application Title */}
@@ -111,7 +112,7 @@ export default function Main() {
         open={open} 
         sx={{ '& .MuiDrawer-paper': { width: drawerWidth, backgroundColor: "white" } }}
       >
-        <Toolbar sx={{ backgroundColor: "#4698E8", display: "flex", justifyContent: "center", height:"64px" }}>
+        <Toolbar sx={{ backgroundColor: "#006a4d", display: "flex", justifyContent: "center", height:"64px" }}>
           <img 
             src="https://lloydstechnologycentre.com/assets/site/ltc-new-logo.svg" 
             alt="Lloyds Logo" 
