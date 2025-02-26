@@ -70,7 +70,7 @@ export default function Main() {
         sx={{ 
           width: open ? `calc(100% - ${drawerWidth}px)` : '100%', 
           transition: 'width 0.3s', 
-          backgroundColor: "#099162",
+          backgroundColor: "#4698E8",
           height:"64px"
         }}
       >
@@ -111,7 +111,7 @@ export default function Main() {
         open={open} 
         sx={{ '& .MuiDrawer-paper': { width: drawerWidth, backgroundColor: "white" } }}
       >
-        <Toolbar sx={{ backgroundColor: "#099162", display: "flex", justifyContent: "center", p: 1 , height:"64px" }}>
+        <Toolbar sx={{ backgroundColor: "#4698E8", display: "flex", justifyContent: "center", height:"64px" }}>
           <img 
             src="https://lloydstechnologycentre.com/assets/site/ltc-new-logo.svg" 
             alt="Lloyds Logo" 
