@@ -35,7 +35,7 @@ const Cost = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="cost" fill="#1976d2" />
+            <Bar dataKey="cost" fill="#006a4d" />
           </BarChart>
         </ResponsiveContainer>
       </Paper>

@@ -111,10 +111,10 @@ const ResourcesDashboard = () => {
   return (
     <Container sx={{ mt: 3 }}>
       {/* Dashboard Title */}
-      <Typography variant="h5" sx={{ mb: 2 }} fontWeight={"bold"}>LBG CloudPulse Resources </Typography>
+      <Typography variant="h5" fontWeight={"bold"} mb={4}>LBG CloudPulse Resources</Typography>
 
       {/* Project Selection Dropdown */}
-      <Select value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} sx={{ mb: 3 }}>
+      <Select sx={{mb:3, outlineColor:"none"}} fontWeight= "bold" value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} >
         {sampleProjects.map((proj) => (
           <MenuItem key={proj} value={proj}>{proj}</MenuItem>
         ))}
@@ -127,9 +127,9 @@ const ResourcesDashboard = () => {
         const serviceResources = groupedByService[service];
 
         return (
-          <Paper key={service} sx={{ mb: 3, p: 2 }}>
+          <Paper key={service} color="white" sx={{ mb: 3, p: 2}}>
             {/* Service Header with Expand/Collapse Button */}
-            <Typography variant="p1">
+            <Typography variant="p1" fontWeight={"bold"}>
               <IconButton onClick={() => toggleService(service)}>
                 {expandedServices[service] ? <ExpandLess /> : <ExpandMore />}
               </IconButton>
@@ -138,8 +138,8 @@ const ResourcesDashboard = () => {
 
             {/* Expandable Table for Service Resources */}
             <Collapse in={expandedServices[service]}>
-              <Table>
-                <TableHead>
+              <Table >
+                <TableHead >
                   <TableRow>
                     <TableCell>ID</TableCell>
                     <TableCell>Type</TableCell>
@@ -161,7 +161,7 @@ const ResourcesDashboard = () => {
                       <TableCell align="start">
                           <Button 
                             variant="contained" 
-                            color="primary" 
+                            sx={{backgroundColor:"#006a4d"}} 
                             size="small" 
                             onClick={() => navigate(`/resource/${resource.id}`, { state: { resource } })}
                           >
