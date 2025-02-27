@@ -31,7 +31,7 @@ import {
 } from '@mui/icons-material';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const drawerWidth = 240; // Set the width of the sidebar drawer
 
@@ -49,8 +49,9 @@ const menuItems = [
 export default function Main() {
   // const navigate = useNavigate(); // Hook for navigation
   const { notificationHistory } = useNotification(); // Access notification history
-  const [open, setOpen] = React.useState(false); // State for controlling sidebar open/close
-
+  const [open, setOpen] = React.useState(false);
+  const location = useLocation(); // State for controlling sidebar open/close
+  const [isOptionSelected, setOptionSelected] = React.useState(location.pathname)
   // Function to toggle the sidebar drawer
   const handleDrawerToggle = () => {
     setOpen(!open);
@@ -124,14 +125,38 @@ export default function Main() {
         {/* <Divider /> */}
 
         {/* Sidebar Menu Items */}
-        <List sx={{backgroundColor:"white"}}>
-          {menuItems.map(({ text, path, icon }) => (
-            <ListItem button key={text} component={Link} to={path} sx={{ color: 'black' }}>
-              <ListItemIcon sx={{ color: 'black' }}>{icon}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <List sx={{ backgroundColor: "white" }}>
+      {menuItems.map(({ text, path, icon }) => (
+        <ListItem
+          button
+          key={text}
+          component={Link}
+          to={path}
+          onClick={() => setOptionSelected(path)} // Update selected item
+          sx={{
+            color: isOptionSelected === path ? "#006a4d" : "black", // Selected item color
+            fontWeight: isOptionSelected === path ? "bold" : "normal", // Bold font when selected
+            backgroundColor: isOptionSelected === path ? "rgba(0, 106, 77, 0.1)" : "white", // Light background for selected item
+            "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+              color: isOptionSelected === path ? "#006a4d" : "inherit", // Match text & icon color for selected
+              fontWeight: isOptionSelected === path ? "bold" : "normal",
+            },
+            "&:hover": {
+              color: "green",
+              backgroundColor: "rgba(0, 128, 0, 0.1)",
+              fontWeight: "bold", // Make text bold on hover
+              "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+                color: "green",
+                fontWeight: "bold",
+              },
+            },
+          }}
+        >
+          <ListItemIcon sx={{ color: "inherit" }}>{icon}</ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItem>
+      ))}
+    </List>
         
       </Drawer>
 
