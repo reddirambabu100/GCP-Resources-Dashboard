@@ -7,7 +7,7 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import ToggleOnSharpIcon from '@mui/icons-material/ToggleOnSharp';
-import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicationsSharp';
+// import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicationsSharp';
 
 
 const cardItems = [

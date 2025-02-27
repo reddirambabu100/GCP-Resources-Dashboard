@@ -1,8 +1,9 @@
 import React from "react";
 import { Container, Typography, Paper, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Bar, BarChart } from "recharts";
+import { AreaChart } from "recharts";
+import { Area } from "recharts";
 // Sample utilization data grouped by project and resource
 const utilizationData = {
   "Project Alpha": {
@@ -77,7 +78,7 @@ const utilizationData = {
 
 const Utilization = () => {
   return (
-    <Container sx={{ mt: 3 }}>
+    <Container sx={{ mt: 3, overflowX: "hidden"}}>
       <Typography variant="h6" sx={{ mb: 2 }} fontWeight={"bold"}>
         Resource Utilization (Project-wise & Resource-wise)
       </Typography>
@@ -101,16 +102,21 @@ const Utilization = () => {
                     <Typography variant="subtitle2" sx={{ mb: 2 }}>
                       CPU Usage (%)
                     </Typography>
-                    <ResponsiveContainer width="100%" height={250}>
-                      <LineChart data={utilizationData[project][resource].cpu}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="usage" stroke="#8884d8" strokeWidth={2} />
-                      </LineChart>
-                    </ResponsiveContainer>
+                    <ResponsiveContainer width="100%" height={300}>
+              <AreaChart data={utilizationData[project][resource].cpu}>
+                <defs>
+                  <linearGradient id="cpuColor" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#1976d2" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#1976d2" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <XAxis dataKey="time" stroke="#1976d2" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Area type="monotone" dataKey="usage" stroke="#1976d2" fill="url(#cpuColor)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
                   </Paper>
 
                   {/* Memory Usage */}
@@ -118,16 +124,16 @@ const Utilization = () => {
                     <Typography variant="subtitle2" sx={{ mb: 2 }}>
                       Memory Usage (%)
                     </Typography>
-                    <ResponsiveContainer width="100%" height={250}>
-                      <LineChart data={utilizationData[project][resource].memory}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="time" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="usage" stroke="#82ca9d" strokeWidth={2} />
-                      </LineChart>
-                    </ResponsiveContainer>
+                    <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={utilizationData[project][resource].memory}>
+                <XAxis dataKey="time" stroke="#43a047" />
+                <YAxis />
+                <CartesianGrid strokeDasharray="3 3" />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="usage" fill="#43a047" barSize={40} radius={[5, 5, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
                   </Paper>
                 </AccordionDetails>
               </Accordion>
