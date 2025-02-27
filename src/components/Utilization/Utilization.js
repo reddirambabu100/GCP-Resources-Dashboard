@@ -1,210 +1,165 @@
-// Data.js - Function to return project data with added fields (id, project, service, type, name, status, createdDate, cost, cpu, memory)
-const Data = () => {
-  // Simulating the data source (project data array)
-  const projectData = [
-    {
-      name: "Project Alpha",
-      services: [
-        {
-          service: "Compute",
-          resources: [
-            {
-              id: "Project Alpha-Compute-VM Instances-1",
-              project: "Project Alpha",
-              service: "Compute",
-              type: "VM Instances",
-              name: "VM Instances 1",
-              status: "Running",
-              createdDate: "2023-01-01",
-              cost: "$50",
-              cpu: [
-                { time: "10:00", usage: 25 },
-                { time: "10:05", usage: 40 },
-                { time: "10:10", usage: 55 },
-                { time: "10:15", usage: 50 },
-                { time: "10:20", usage: 35 }
-              ],
-              memory: [
-                { time: "10:00", usage: 45 },
-                { time: "10:05", usage: 55 },
-                { time: "10:10", usage: 75 },
-                { time: "10:15", usage: 70 },
-                { time: "10:20", usage: 60 }
-              ]
-            },
-            {
-              id: "Project Alpha-Compute-Kubernetes Clusters-2",
-              project: "Project Alpha",
-              service: "Compute",
-              type: "Kubernetes Clusters",
-              name: "Kubernetes Clusters 2",
-              status: "Stopped",
-              createdDate: "2023-01-02",
-              cost: "$100",
-              cpu: [
-                { time: "10:00", usage: 30 },
-                { time: "10:05", usage: 45 },
-                { time: "10:10", usage: 60 },
-                { time: "10:15", usage: 55 },
-                { time: "10:20", usage: 40 }
-              ],
-              memory: [
-                { time: "10:00", usage: 50 },
-                { time: "10:05", usage: 65 },
-                { time: "10:10", usage: 80 },
-                { time: "10:15", usage: 75 },
-                { time: "10:20", usage: 65 }
-              ]
-            },
-            {
-              id: "Project Alpha-Compute-VM Instances-3",
-              project: "Project Alpha",
-              service: "Compute",
-              type: "VM Instances",
-              name: "VM Instances 3",
-              status: "Running",
-              createdDate: "2023-01-10",
-              cost: "$75",
-              cpu: [
-                { time: "10:00", usage: 20 },
-                { time: "10:05", usage: 40 },
-                { time: "10:10", usage: 60 },
-                { time: "10:15", usage: 55 },
-                { time: "10:20", usage: 50 }
-              ],
-              memory: [
-                { time: "10:00", usage: 50 },
-                { time: "10:05", usage: 60 },
-                { time: "10:10", usage: 70 },
-                { time: "10:15", usage: 65 },
-                { time: "10:20", usage: 55 }
-              ]
-            }
-          ]
-        },
-        {
-          service: "Storage",
-          resources: [
-            {
-              id: "Project Alpha-Storage-Cloud Storage-1",
-              project: "Project Alpha",
-              service: "Storage",
-              type: "Cloud Storage",
-              name: "Cloud Storage 1",
-              status: "Available",
-              createdDate: "2023-02-01",
-              cost: "$150",
-              cpu: [
-                { time: "10:00", usage: 20 },
-                { time: "10:05", usage: 30 },
-                { time: "10:10", usage: 40 },
-                { time: "10:15", usage: 35 },
-                { time: "10:20", usage: 25 }
-              ],
-              memory: [
-                { time: "10:00", usage: 35 },
-                { time: "10:05", usage: 45 },
-                { time: "10:10", usage: 55 },
-                { time: "10:15", usage: 50 },
-                { time: "10:20", usage: 40 }
-              ]
-            },
-            {
-              id: "Project Alpha-Storage-Bigtable-2",
-              project: "Project Alpha",
-              service: "Storage",
-              type: "Bigtable",
-              name: "Bigtable 2",
-              status: "Running",
-              createdDate: "2023-03-01",
-              cost: "$200",
-              cpu: [
-                { time: "10:00", usage: 30 },
-                { time: "10:05", usage: 50 },
-                { time: "10:10", usage: 60 },
-                { time: "10:15", usage: 55 },
-                { time: "10:20", usage: 45 }
-              ],
-              memory: [
-                { time: "10:00", usage: 50 },
-                { time: "10:05", usage: 65 },
-                { time: "10:10", usage: 75 },
-                { time: "10:15", usage: 70 },
-                { time: "10:20", usage: 60 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      name: "Project Beta",
-      services: [
-        {
-          service: "Compute",
-          resources: [
-            {
-              id: "Project Beta-Compute-VM Instances-1",
-              project: "Project Beta",
-              service: "Compute",
-              type: "VM Instances",
-              name: "VM Instances 1",
-              status: "Running",
-              createdDate: "2023-02-05",
-              cost: "$70",
-              cpu: [
-                { time: "10:00", usage: 20 },
-                { time: "10:05", usage: 30 },
-                { time: "10:10", usage: 40 },
-                { time: "10:15", usage: 50 },
-                { time: "10:20", usage: 45 }
-              ],
-              memory: [
-                { time: "10:00", usage: 40 },
-                { time: "10:05", usage: 50 },
-                { time: "10:10", usage: 60 },
-                { time: "10:15", usage: 55 },
-                { time: "10:20", usage: 50 }
-              ]
-            }
-          ]
-        },
-        {
-          service: "Networking",
-          resources: [
-            {
-              id: "Project Beta-Networking-VPC Networks-1",
-              project: "Project Beta",
-              service: "Networking",
-              type: "VPC Networks",
-              name: "VPC Networks 1",
-              status: "Running",
-              createdDate: "2023-03-10",
-              cost: "$50",
-              cpu: [
-                { time: "10:00", usage: 15 },
-                { time: "10:05", usage: 25 },
-                { time: "10:10", usage: 35 },
-                { time: "10:15", usage: 30 },
-                { time: "10:20", usage: 20 }
-              ],
-              memory: [
-                { time: "10:00", usage: 30 },
-                { time: "10:05", usage: 40 },
-                { time: "10:10", usage: 50 },
-                { time: "10:15", usage: 45 },
-                { time: "10:20", usage: 35 }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    // More projects can be added here...
-  ];
+import React, { useState, useEffect } from "react";
+import { Container, Typography, Paper, Accordion, AccordionSummary, AccordionDetails, CircularProgress, Alert , Box , Button } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
-  // Return the project data with additional fields
-  return projectData;
-}
+// Constants and Sample Data Generation
+const sampleProjects = ["Project Alpha", "Project Beta", "Project Gamma", "Project Delta"];
+const services = ["Compute", "Storage", "Database", "Networking", "Security"];
+const resourceTypes = {
+  Compute: ["VM Instances", "Kubernetes Clusters", "Cloud Run"],
+  Storage: ["Cloud Storage", "Filestore", "Bigtable"],
+  Database: ["Cloud SQL", "Firestore", "Spanner"],
+  Networking: ["VPC Networks", "Load Balancers", "Cloud DNS"],
+  Security: ["IAM Roles", "Firewall Rules"]
+};
 
-export default Data;
+const generateSampleData = () => {
+  return Array.from({ length: 100 }, (_, i) => {
+    const project = sampleProjects[i % sampleProjects.length];
+    const service = services[i % services.length];
+    const type = resourceTypes[service][i % resourceTypes[service].length];
+    return {
+      id: i + 1,
+      project,
+      service,
+      type,
+      name: `${type} ${i + 1}`,
+      status: ["Running", "Stopped", "Available", "Pending"][i % 4],
+      createdDate: new Date(2023, Math.floor(i / 10), (i % 28) + 1).toISOString().split("T")[0],
+      cpu: [
+        { time: "10:00", usage: 25 },
+        { time: "10:05", usage: 40 },
+        { time: "10:10", usage: 55 },
+        { time: "10:15", usage: 50 },
+        { time: "10:20", usage: 35 },
+      ],
+      memory: [
+        { time: "10:00", usage: 45 },
+        { time: "10:05", usage: 55 },
+        { time: "10:10", usage: 75 },
+        { time: "10:15", usage: 70 },
+        { time: "10:20", usage: 60 },
+      ],
+    };
+  });
+};
+
+const apiStatusConstants = {
+  INITIAL: "INITIAL",
+  IN_PROGRESS: "IN_PROGRESS",
+  SUCCESS: "SUCCESS",
+  FAILURE: "FAILURE",
+};
+
+const Utilization = () => {
+  const [utilizationData, setUtilizationData] = useState({});
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.INITIAL);
+  const [error, setError] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      setApiStatus(apiStatusConstants.IN_PROGRESS);
+      setError(null);
+
+      const response = await new Promise((resolve) =>
+        setTimeout(() => {
+          resolve({
+            resources: generateSampleData()
+          });
+        }, 1000)
+      );
+
+      // Simulating the addition of CPU and memory usage data
+      const enrichedData = response.resources.reduce((acc, resource) => {
+        if (!acc[resource.project]) acc[resource.project] = {};
+        if (!acc[resource.project][resource.name]) acc[resource.project][resource.name] = {
+          cpu: resource.cpu,
+          memory: resource.memory
+        };
+        return acc;
+      }, {});
+
+      setUtilizationData(enrichedData);
+      setApiStatus(apiStatusConstants.SUCCESS);
+    } catch (err) {
+      setError("Failed to load resource data. Please try again.");
+      setApiStatus(apiStatusConstants.FAILURE);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <Container sx={{ mt: 3 }}>
+      <Typography variant="h6" sx={{ mb: 2 }} fontWeight={"bold"}>
+        Resource Utilization (Project-wise & Resource-wise)
+      </Typography>
+
+       {/* Centered Loading, Error and Retry Button */}
+       <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ mb: 2 }}>
+        {apiStatus === apiStatusConstants.IN_PROGRESS && <CircularProgress />}
+        {apiStatus === apiStatusConstants.FAILURE && (
+          <>
+            <Alert severity="error">{error}</Alert>
+            <Button variant="contained" color="primary" onClick={fetchData} sx={{ marginTop: 2 }}>
+              Retry
+            </Button>
+          </>
+        )}
+      </Box>
+
+      {apiStatus === apiStatusConstants.SUCCESS && Object.keys(utilizationData).map((project) => (
+        <Accordion key={project} defaultExpanded>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="h6">{project}</Typography>
+          </AccordionSummary>
+
+          <AccordionDetails>
+            {Object.keys(utilizationData[project]).map((resource) => (
+              <Paper key={resource} sx={{ mb: 3, p: 2 }}>
+                <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                  {resource}
+                </Typography>
+
+                {/* CPU Usage */}
+                <Typography variant="subtitle2" sx={{ mb: 2 }}>
+                  CPU Usage (%)
+                </Typography>
+                <ResponsiveContainer width="100%" height={250}>
+                  <LineChart data={utilizationData[project][resource].cpu}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="time" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="usage" stroke="#8884d8" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+
+                {/* Memory Usage */}
+                <Typography variant="subtitle2" sx={{ mb: 2, mt: 3 }}>
+                  Memory Usage (%)
+                </Typography>
+                <ResponsiveContainer width="100%" height={250}>
+                  <LineChart data={utilizationData[project][resource].memory}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="time" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="usage" stroke="#82ca9d" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </Paper>
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      ))}
+    </Container>
+  );
+};
+
+export default Utilization;
