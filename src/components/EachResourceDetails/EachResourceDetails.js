@@ -1,11 +1,11 @@
 import React from "react";
-import { useParams, useLocation } from "react-router-dom";
-import { Container, Typography, Paper, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import {  useLocation, useNavigate } from "react-router-dom";
+import { Container, Typography, Paper, Divider, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button } from "@mui/material";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const EachResourceDetails = () => {
-  const { id } = useParams();
   const location = useLocation();
+  const navigate = useNavigate();  // Hook to navigate programmatically
   const resource = location.state?.resource;
 
   if (!resource) {
@@ -27,6 +27,11 @@ const EachResourceDetails = () => {
 
   return (
     <Container sx={{ mt: 3 }}>
+      {/* Back Button */}
+      <Button variant="outlined" color="primary" onClick={() => navigate(-1)} sx={{ mb: 2 }}>
+        Back
+      </Button>
+
       <Paper sx={{ p: 3 }}>
         <Typography variant="h4" gutterBottom fontWeight={"bold"}>
           Resource Details

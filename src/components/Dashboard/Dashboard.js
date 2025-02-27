@@ -1,44 +1,97 @@
-import React from "react";
-import { Grid, Container, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Grid, Container, Typography, CircularProgress, Alert, Button , Box } from "@mui/material";
 import InfoCard from "../InfoCard/InfoCard";
 import { Link } from "react-router-dom";
-import WorkIcon from "@mui/icons-material/Work";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import UpgradeIcon from "@mui/icons-material/Upgrade";
-import ToggleOnSharpIcon from '@mui/icons-material/ToggleOnSharp';
-import SettingsApplicationsSharpIcon from '@mui/icons-material/SettingsApplicationsSharp';
+import {
+  Work as WorkIcon,
+  AttachMoney as AttachMoneyIcon,
+  TrendingUp as TrendingUpIcon,
+  Upgrade as UpgradeIcon,
+  ToggleOnSharp as ToggleOnSharpIcon
+} from "@mui/icons-material";
 
+// Define API status constants to manage API request states
+const apiStatusConstants = {
+  INITIAL: "INITIAL",
+  IN_PROGRESS: "IN_PROGRESS",
+  SUCCESS: "SUCCESS",
+  FAILURE: "FAILURE",
+};
 
-const cardItems = [
-  { title: "Resource", path:"/resources", description: "A resource in cloud computing refers to any computing component—such as virtual machines, storage, databases, and networking—that is provisioned and managed in the cloud.", icon: WorkIcon},
-  { title: "Utilization", path:"/utilization" ,  description: "In cloud computing, resource utilization refers to the efficient allocation and management of computing resources such as CPU, memory, storage, and networking to optimize performance and reduce costs. ", icon: TrendingUpIcon},
-  { title: "Cost Analysis",path:"/cost" ,  description: "computing resources—such as CPU, memory, storage, and networking—are used optimally to minimize costs while maintaining performance.", icon: AttachMoneyIcon},
-  { title: "Improvement", path:"/opportunities" , description: "Auto-Scaling & Load Balancing, Rightsizing & Optimization , Serverless Computing, Spot & Reserved Instances, Storage Optimization, Efficient Networking, Cost Monitoring & Alerts ", icon: UpgradeIcon},
-  { title: "Green Switch", path:"/greenswitch" ,  description: "It refers to energy-efficient mechanisms that optimize resource utilization, reduce power consumption, and minimize carbon footprints in cloud environments.", icon: ToggleOnSharpIcon},
-  
-];
+const Dashboard = () => {
+  // State variables to manage API response data, status, and errors
+  const [cardItems, setCardItems] = useState([]);
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.INITIAL);
+  const [error, setError] = useState(null);
 
-
-export default function Dashboard() {
-  return (
-    <>
+  // Function to fetch dashboard data from API
+  const fetchData = async () => {
+    try {
+      setApiStatus(apiStatusConstants.IN_PROGRESS); // Set API status to 'IN_PROGRESS' before fetching
+      setError(null); // Reset error state before making API call
       
+      // Simulated API call (Replace with actual API call)
+      const response = await new Promise((resolve) =>
+        setTimeout(
+          () =>
+            resolve([
+              { title: "Resource", path: "/resources", description: "Cloud computing resources like VMs, storage, and databases.", icon: WorkIcon },
+              { title: "Utilization", path: "/utilization", description: "Tracking CPU, memory, and network performance.", icon: TrendingUpIcon },
+              { title: "Cost Analysis", path: "/cost", description: "Optimizing costs for cloud resource usage.", icon: AttachMoneyIcon },
+              { title: "Improvement", path: "/opportunities", description: "Optimization techniques like auto-scaling and cost monitoring.", icon: UpgradeIcon },
+              { title: "Green Switch", path: "/greenswitch", description: "Energy-efficient cloud resource management.", icon: ToggleOnSharpIcon },
+            ]),
+          1000 // Simulated network delay of 2 seconds
+        )
+      );
+      
+      // Update state with fetched data and set API status to 'SUCCESS'
+      setCardItems(response);
+      setApiStatus(apiStatusConstants.SUCCESS);
+    } catch (err) {
+      // Handle API failure and update error message
+      setError("Failed to load dashboard data. Please try again.");
+      setApiStatus(apiStatusConstants.FAILURE);
+    }
+  };
+
+  // useEffect to fetch data when the component mounts
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
     <Container sx={{ marginTop: 4 }}>
-      <Typography variant="h4" fontWeight={"bold"} mb={4}>LBG CloudPulse-Dashboard</Typography>
-      <Grid container spacing={3}>
-        {cardItems.map((card , index) => ( 
+      {/* Dashboard Title */}
+      <Typography variant="h4" fontWeight="bold" mb={4}>LBG CloudPulse-Dashboard</Typography>
+      
+      {/* Centered Loading, Error and Retry Button */}
+      <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ mb: 2 }}>
+        {apiStatus === apiStatusConstants.IN_PROGRESS && <CircularProgress />}
+        {apiStatus === apiStatusConstants.FAILURE && (
+          <>
+            <Alert severity="error">{error}</Alert>
+            <Button variant="contained" color="primary" onClick={fetchData} sx={{ marginTop: 2 }}>
+              Retry
+            </Button>
+          </>
+        )}
+      </Box>
+      
+      {/* Render dashboard content when API request is successful */}
+      {apiStatus === apiStatusConstants.SUCCESS && (
+        <Grid container spacing={3}>
+          {cardItems.map((card, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-            <Link to={card.path} style={{ textDecoration: "none", color: "inherit" }}>
-            <InfoCard icon={card.icon} title={card.title} description={card.description} />
-            </Link>
+              <Link to={card.path} style={{ textDecoration: "none", color: "inherit" }}>
+                <InfoCard icon={card.icon} title={card.title} description={card.description} />
+              </Link>
             </Grid>
-        ))}
-      </Grid>
+          ))}
+        </Grid>
+      )}
     </Container>
-    </>
   );
-}
+};
 
-
-
+export default Dashboard;

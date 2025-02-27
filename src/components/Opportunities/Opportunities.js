@@ -1,71 +1,138 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   Container, Typography, Paper, Table, TableHead, TableRow, TableCell, 
-  TableBody, Button, Accordion, AccordionSummary, AccordionDetails, TextField, List, ListItem, ListItemText 
+  TableBody, Button,Box, Accordion, AccordionSummary, AccordionDetails, TextField, List, ListItem, ListItemText, MenuItem, Select, CircularProgress, Alert
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-// Mock Data for Optimization Opportunities Grouped by Project
-const opportunitiesData = {
-  "Project Alpha": [
-    { name: "VM-02", type: "Compute Engine", issue: "Low CPU Utilization", action: "Consider Downgrading" },
-    { name: "Cloud SQL DB", type: "Database", issue: "Idle for 30+ Days", action: "Turn Off or Delete" }
-  ],
-  "Project Beta": [
-    { name: "Storage Bucket B", type: "Storage", issue: "Unused Storage", action: "Delete or Archive" },
-    { name: "VM-Backup-01", type: "Compute Engine", issue: "Duplicate Instance", action: "Merge or Remove" }
-  ],
-  "Project Gamma": [
-    { name: "BigQuery Dataset", type: "Analytics", issue: "Rarely Queried", action: "Optimize or Delete" }
-  ]
+const sampleProjects = ["Project Alpha", "Project Beta", "Project Gamma", "Project Delta"];
+const services = ["Compute", "Storage", "Database", "Networking", "Security"];
+const resourceTypes = {
+  Compute: ["VM Instances", "Kubernetes Clusters", "Cloud Run"],
+  Storage: ["Cloud Storage", "Filestore", "Bigtable"],
+  Database: ["Cloud SQL", "Firestore", "Spanner"],
+  Networking: ["VPC Networks", "Load Balancers", "Cloud DNS"],
+  Security: ["IAM Roles", "Firewall Rules"]
+};
+
+const apiStatusConstants = {
+  INITIAL: "INITIAL",
+  IN_PROGRESS: "IN_PROGRESS",
+  SUCCESS: "SUCCESS",
+  FAILURE: "FAILURE",
+};
+
+const generateSampleData = () => {
+  return Array.from({ length: 100 }, (_, i) => {
+    const project = sampleProjects[i % sampleProjects.length];
+    const service = services[i % services.length];
+    const type = resourceTypes[service][i % resourceTypes[service].length];
+    return {
+      id: i + 1,
+      project,
+      service,
+      type,
+      name: `${type} ${i + 1}`,
+      status: ["Running", "Stopped", "Available", "Pending"][i % 4],
+      createdDate: new Date(2023, Math.floor(i / 10), (i % 28) + 1).toISOString().split("T")[0],
+      issue: "Optimization Required",
+      action: "Review and Optimize"
+    };
+  });
 };
 
 const Opportunities = () => {
-  const [comments, setComments] = useState({}); // Stores comments for each opportunity
-  const [inputComments, setInputComments] = useState({}); // Manages input field values
+  const [resources, setResources] = useState([]);
+  const [comments, setComments] = useState({});
+  const [inputComments, setInputComments] = useState({});
+  const [selectedProject, setSelectedProject] = useState("");
+  const [apiStatus, setApiStatus] = useState(apiStatusConstants.INITIAL);
+  const [error, setError] = useState(null);
 
-  // Handle input changes
-  const handleInputChange = (event, project, index) => {
-    const newInputs = { ...inputComments };
-    if (!newInputs[project]) newInputs[project] = {};
-    newInputs[project][index] = event.target.value;
-    setInputComments(newInputs);
+  const fetchData = async () => {
+    try {
+      setApiStatus(apiStatusConstants.IN_PROGRESS);
+      setError(null);
+
+      const response = await new Promise((resolve) =>
+        setTimeout(() => {
+          resolve({
+            resources: generateSampleData()
+          });
+        }, 1000)
+      );
+
+      setResources(response.resources);
+      setSelectedProject(response.resources.length ? response.resources[0].project : "");
+      setApiStatus(apiStatusConstants.SUCCESS);
+    } catch (err) {
+      setError("Failed to load resource data. Please try again.");
+      setApiStatus(apiStatusConstants.FAILURE);
+    }
   };
 
-  // Save comment when "Add Comment" button is clicked
-  const handleAddComment = (project, index) => {
-    if (!inputComments[project]?.[index]) return; // Prevent adding empty comments
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const newComments = { ...comments };
-    if (!newComments[project]) newComments[project] = {};
-    if (!newComments[project][index]) newComments[project][index] = [];
-    
-    newComments[project][index].push(inputComments[project][index]); // Add new comment
-    setComments(newComments);
+  const filteredResources = selectedProject
+    ? resources.filter((res) => res.project === selectedProject)
+    : resources;
 
-    // Clear input field after submission
-    const newInputs = { ...inputComments };
-    newInputs[project][index] = "";
-    setInputComments(newInputs);
+  const handleInputChange = (event, resourceId) => {
+    setInputComments({ ...inputComments, [resourceId]: event.target.value });
+  };
+
+  const handleAddComment = (resourceId) => {
+    if (!inputComments[resourceId]) return;
+
+    setComments({
+      ...comments,
+      [resourceId]: [...(comments[resourceId] || []), inputComments[resourceId]]
+    });
+
+    setInputComments({ ...inputComments, [resourceId]: "" });
   };
 
   return (
     <Container sx={{ mt: 3 }}>
       <Typography variant="h5" sx={{ mb: 2 }} fontWeight={"bold"}>Opportunities for Improvement</Typography>
+      <Select
+        value={selectedProject}
+        onChange={(e) => setSelectedProject(e.target.value)}
+        displayEmpty
+        fullWidth
+        sx={{ mb: 2 }}
+      >
+        <MenuItem value=""><em>All Projects</em></MenuItem>
+        {sampleProjects.map((proj) => (
+          <MenuItem key={proj} value={proj}>{proj}</MenuItem>
+        ))}
+      </Select>
 
-      {Object.keys(opportunitiesData).map((project) => (
-        <Accordion key={project} defaultExpanded>
+       {/* Centered Loading, Error and Retry Button */}
+       <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ mb: 2 }}>
+        {apiStatus === apiStatusConstants.IN_PROGRESS && <CircularProgress />}
+        {apiStatus === apiStatusConstants.FAILURE && (
+          <>
+            <Alert severity="error">{error}</Alert>
+            <Button variant="contained" color="primary" onClick={fetchData} sx={{ marginTop: 2 }}>
+              Retry
+            </Button>
+          </>
+        )}
+      </Box>
+
+      {filteredResources.map((resource) => (
+        <Accordion key={resource.id} defaultExpanded>
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6">{project}</Typography>
+            <Typography variant="h6">{resource.project} - {resource.name}</Typography>
           </AccordionSummary>
-
           <AccordionDetails>
             <Paper sx={{ p: 2, mb: 2 }}>
-              <Typography variant="h6" sx={{ mb: 2 }}>Optimization Suggestions</Typography>
               <Table>
                 <TableHead>
                   <TableRow sx={{ backgroundColor: "#f4f4f4" }}>
-                    <TableCell><b>Name</b></TableCell>
                     <TableCell><b>Type</b></TableCell>
                     <TableCell><b>Issue</b></TableCell>
                     <TableCell><b>Recommended Action</b></TableCell>
@@ -74,48 +141,41 @@ const Opportunities = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {opportunitiesData[project].map((opportunity, index) => (
-                    <TableRow key={index}>
-                      <TableCell>{opportunity.name}</TableCell>
-                      <TableCell>{opportunity.type}</TableCell>
-                      <TableCell>{opportunity.issue}</TableCell>
-                      <TableCell>{opportunity.action}</TableCell>
-                      <TableCell>
-                        <Button variant="contained" color="primary" size="small">
-                          Take Action
-                        </Button>
-                      </TableCell>
-                      <TableCell>
-                        <TextField 
-                          size="small" 
-                          fullWidth 
-                          placeholder="Add comment" 
-                          value={inputComments[project]?.[index] || ""}
-                          onChange={(e) => handleInputChange(e, project, index)}
-                        />
-                        <Button 
-                          variant="outlined" 
-                          color="secondary" 
-                          size="small" 
-                          sx={{ mt: 1 }}
-                          onClick={() => handleAddComment(project, index)}
-                        >
-                          Add Comment
-                        </Button>
-
-                        {/* Display list of saved comments */}
-                        {comments[project]?.[index] && (
-                          <List dense sx={{ mt: 1, bgcolor: "#f9f9f9", p: 1, borderRadius: 1 }}>
-                            {comments[project][index].map((comment, i) => (
-                              <ListItem key={i} sx={{ py: 0 }}>
-                                <ListItemText primary={`🗨 ${comment}`} />
-                              </ListItem>
-                            ))}
-                          </List>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                  <TableRow>
+                    <TableCell>{resource.type}</TableCell>
+                    <TableCell>{resource.issue}</TableCell>
+                    <TableCell>{resource.action}</TableCell>
+                    <TableCell>
+                      <Button variant="contained" color="primary" size="small">Take Action</Button>
+                    </TableCell>
+                    <TableCell>
+                      <TextField 
+                        size="small" 
+                        fullWidth 
+                        placeholder="Add comment" 
+                        value={inputComments[resource.id] || ""}
+                        onChange={(e) => handleInputChange(e, resource.id)}
+                      />
+                      <Button 
+                        variant="outlined" 
+                        color="secondary" 
+                        size="small" 
+                        sx={{ mt: 1 }}
+                        onClick={() => handleAddComment(resource.id)}
+                      >
+                        Add Comment
+                      </Button>
+                      {comments[resource.id] && (
+                        <List dense sx={{ mt: 1, bgcolor: "#f9f9f9", p: 1, borderRadius: 1 }}>
+                          {comments[resource.id].map((comment, i) => (
+                            <ListItem key={i} sx={{ py: 0 }}>
+                              <ListItemText primary={`🗨 ${comment}`} />
+                            </ListItem>
+                          ))}
+                        </List>
+                      )}
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
             </Paper>
