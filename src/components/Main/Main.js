@@ -128,7 +128,7 @@ export default function Main() {
         <List sx={{ backgroundColor: "white" }}>
       {menuItems.map(({ text, path, icon }) => (
         <ListItem
-          button
+          disableGutters
           key={text}
           component={Link}
           to={path}

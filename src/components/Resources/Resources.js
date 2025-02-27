@@ -108,13 +108,32 @@ const ResourcesDashboard = () => {
     return acc;
   }, {});
 
+
+  // const fetchResourceData = async() => {
+  //   const url = "http://localhost:5000/api/resources";
+  //   const response = await fetch(url);
+  //   const data = await response.json();
+  //   console.log(data);
+  // }
+
+
+
+  // useEffect (() => {
+  //    fetchResourceData();
+  // }, [])
+
   return (
     <Container sx={{ mt: 3 }}>
       {/* Dashboard Title */}
       <Typography variant="h5" fontWeight={"bold"} mb={4}>LBG CloudPulse Resources</Typography>
 
       {/* Project Selection Dropdown */}
-      <Select sx={{mb:3, outlineColor:"none"}} fontWeight= "bold" value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} >
+      <Select sx={{mb:3, backgroundColor:"#006a4d", color: "white",
+               "& .MuiSelect-icon": { color: "white" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Default outline color
+               "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#004d36" }, // Darker shade on hover
+               "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Change color when focused
+    }} fontWeight= "bold" value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} >
         {sampleProjects.map((proj) => (
           <MenuItem key={proj} value={proj}>{proj}</MenuItem>
         ))}
@@ -127,20 +146,20 @@ const ResourcesDashboard = () => {
         const serviceResources = groupedByService[service];
 
         return (
-          <Paper key={service} color="white" sx={{ mb: 3, p: 2}}>
+          <Paper key={service}  sx={{ mb: 3, p: 2, backgroundColor:"#006a4d"}}> 
             {/* Service Header with Expand/Collapse Button */}
-            <Typography variant="p1" fontWeight={"bold"}>
+            <Typography variant="p1" fontWeight={"bold"} color="white">
               <IconButton onClick={() => toggleService(service)}>
-                {expandedServices[service] ? <ExpandLess /> : <ExpandMore />}
+                {expandedServices[service] ? <ExpandLess sx={{color:"white"}} /> : <ExpandMore sx={{color:"white"}}/>}
               </IconButton>
               {service} Services
             </Typography>
 
             {/* Expandable Table for Service Resources */}
-            <Collapse in={expandedServices[service]}>
+            <Collapse in={expandedServices[service]} timeout={"auto"} unmountOnExit>
               <Table >
                 <TableHead >
-                  <TableRow>
+                  <TableRow >
                     <TableCell>ID</TableCell>
                     <TableCell>Type</TableCell>
                     <TableCell>Name</TableCell>
@@ -152,7 +171,7 @@ const ResourcesDashboard = () => {
                 <TableBody>
                   {/* Display only resources within the current page */}
                   {serviceResources.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((resource) => (
-                    <TableRow key={resource.id}>
+                    <TableRow key={resource.id} sx={{ backgroundColor: "white" }}>
                       <TableCell>{resource.id}</TableCell>
                       <TableCell>{resource.type}</TableCell>
                       <TableCell>{resource.name}</TableCell>
@@ -160,6 +179,7 @@ const ResourcesDashboard = () => {
                       <TableCell>{resource.createdDate}</TableCell>
                       <TableCell align="start">
                           <Button 
+                          
                             variant="contained" 
                             sx={{backgroundColor:"#006a4d"}} 
                             size="small" 
@@ -175,6 +195,14 @@ const ResourcesDashboard = () => {
 
               {/* Pagination Controls */}
               <TablePagination
+                sx={{
+                  "& .MuiTablePagination-root": { color: "white" }, // Applies to the main root container
+                  "& .MuiTablePagination-selectLabel": { color: "white" }, // "Rows per page" text
+                  "& .MuiSelect-icon": { color: "white" }, // Dropdown arrow icon
+                  "& .MuiTablePagination-displayedRows": { color: "white" }, // Page info (e.g., 1-5 of 50)
+                  "& .MuiIconButton-root": { color: "white" }, 
+                  color:"white",
+                }}
                 rowsPerPageOptions={[5, 10, 20]} // Options for items per page
                 count={serviceResources.length} // Total number of resources in the category
                 rowsPerPage={rowsPerPage} // Selected rows per page
