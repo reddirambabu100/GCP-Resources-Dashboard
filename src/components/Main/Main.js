@@ -142,11 +142,11 @@ export default function Main() {
               fontWeight: isOptionSelected === path ? "bold" : "normal",
             },
             "&:hover": {
-              color: "green",
+              color: "#006a4d",
               backgroundColor: "rgba(0, 128, 0, 0.1)",
               fontWeight: "bold", // Make text bold on hover
               "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-                color: "green",
+                color: "#006a4d",
                 fontWeight: "bold",
               },
             },
