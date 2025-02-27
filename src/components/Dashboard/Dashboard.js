@@ -22,8 +22,7 @@ const cardItems = [
 
 export default function Dashboard() {
   return (
-    <>
-      
+    <>   
     <Container sx={{ marginTop: 4 }}>
       <Typography variant="h4" fontWeight={"bold"} mb={4}>LBG CloudPulse-Dashboard</Typography>
       <Grid container spacing={3}>
