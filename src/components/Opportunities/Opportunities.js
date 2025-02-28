@@ -146,7 +146,7 @@ const Opportunities = () => {
                     <TableCell>{resource.issue}</TableCell>
                     <TableCell>{resource.action}</TableCell>
                     <TableCell>
-                      <Button variant="contained" color="primary" size="small">Take Action</Button>
+                      <Button sx={{backgroundColor:"#006a4d"}} variant="contained" color="primary" size="small">Take Action</Button>
                     </TableCell>
                     <TableCell>
                       <TextField 

@@ -119,11 +119,11 @@ const ResourcesDashboard = () => {
     if (!acc[resource.service]) acc[resource.service] = [];
     acc[resource.service].push(resource);
     return acc;
-  }, {});
+  }, {}); 
 
   return (
     <Container sx={{ mt: 3 }}>
-      <Typography variant="h5" sx={{ mb: 2 }} fontWeight="bold">LBG CloudPulse Resources</Typography>
+      <Typography variant="h5" mb={4} fontWeight="bold">LBG CloudPulse Resources</Typography>
        {/* Centered Loading, Error and Retry Button */}
        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ mb: 2 }}>
         {apiStatus === apiStatusConstants.IN_PROGRESS && <CircularProgress />}
@@ -136,13 +136,37 @@ const ResourcesDashboard = () => {
           </>
         )}
       </Box>
-      <Select value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} sx={{ mb: 3 }}>
+      <Select sx={{mb:3, backgroundColor:"#006a4d", color: "white",
+               "& .MuiSelect-icon": { color: "white" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Default outline color
+               "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#004d36" }, // Darker shade on hover
+               "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Change color when focused
+    }} fontWeight= "bold" value={selectedProject} onChange={(e) => setSelectedProject(e.target.value)} >
+
         {[...new Set(resources.map(res => res.project))].map((proj) => (
           <MenuItem key={proj} value={proj}>{proj}</MenuItem>
         ))}
       </Select>
-      <TextField  placeholder="Search by Resource type..." variant="outlined" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} sx={{ mb: 2, mx: 2 }} />
-      <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} displayEmpty sx={{ mb: 3 }}>
+      <TextField  
+  placeholder="Search by Resource type..."  
+  variant="outlined"  
+  value={searchTerm}  
+  onChange={(e) => setSearchTerm(e.target.value)}  
+  sx={{
+    mb: 2, 
+    mx: 2,  
+    "& .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Default color
+    "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#004d36" }, // Darker on hover
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Keep color on focus
+    "& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#004d36" }, // Prevent losing color on hover out
+  }}  
+/>  
+      <Select value={statusFilter} sx={{mb:3, backgroundColor:"#006a4d", color: "white",
+               "& .MuiSelect-icon": { color: "white" },
+              "& .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Default outline color
+               "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#004d36" }, // Darker shade on hover
+               "&.Mui-focused .MuiOutlinedInput-notchedOutline": { borderColor: "#006a4d" }, // Change color when focused
+    }} fontWeight= "bold" onChange={(e) => setStatusFilter(e.target.value)} displayEmpty >
         <MenuItem value="">All Statuses</MenuItem>
         <MenuItem value="Running">Running</MenuItem>
         <MenuItem value="Stopped">Stopped</MenuItem>
@@ -154,10 +178,10 @@ const ResourcesDashboard = () => {
         const rowsPerPage = pagination[service]?.rowsPerPage || 5;
         const serviceResources = groupedByService[service];
         return (
-          <Paper key={service} sx={{ mb: 3, p: 2 }}>
-            <Typography variant="h6">
+          <Paper key={service} sx={{ mb: 3, p: 2, backgroundColor:"#006a4d" }}>
+            <Typography variant="p1" fontWeight={"bold"} color="white">
               <IconButton onClick={() => toggleService(service)}>
-                {expandedServices[service] ? <ExpandLess /> : <ExpandMore />}
+                {expandedServices[service] ? <ExpandLess sx={{color:"white"}} /> : <ExpandMore sx={{color:"white"}} />}
               </IconButton>
               {service} Services
             </Typography>
@@ -175,20 +199,28 @@ const ResourcesDashboard = () => {
                 </TableHead>
                 <TableBody>
                   {serviceResources.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((resource) => (
-                    <TableRow key={resource.id}>
+                    <TableRow key={resource.id} sx={{ backgroundColor: "white" }}>
                       <TableCell>{resource.id}</TableCell>
                       <TableCell>{resource.type}</TableCell>
                       <TableCell>{resource.name}</TableCell>
                       <TableCell>{resource.status}</TableCell>
                       <TableCell>{resource.createdDate}</TableCell>
                       <TableCell>
-                        <Button variant="contained" color="primary" size="small" onClick={() => navigate(`/resource/${resource.id}`, { state: { resource } })}>View Details</Button>
+                        <Button variant="contained" sx={{backgroundColor:"#006a4d"}} size="small" onClick={() => navigate(`/resource/${resource.id}`, { state: { resource } })}>View Details</Button>
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
               <TablePagination
+                sx={{
+                  "& .MuiTablePagination-root": { color: "white" }, // Applies to the main root container
+                  "& .MuiTablePagination-selectLabel": { color: "white" }, // "Rows per page" text
+                  "& .MuiSelect-icon": { color: "white" }, // Dropdown arrow icon
+                  "& .MuiTablePagination-displayedRows": { color: "white" }, // Page info (e.g., 1-5 of 50)
+                  "& .MuiIconButton-root": { color: "white" }, 
+                  color:"white",
+                }}
                 rowsPerPageOptions={[5, 10, 25]}
                 component="div"
                 count={serviceResources.length}

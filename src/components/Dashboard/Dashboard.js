@@ -63,7 +63,7 @@ const Dashboard = () => {
   return (
     <Container sx={{ marginTop: 4 }}>
       {/* Dashboard Title */}
-      <Typography variant="h4" fontWeight="bold" mb={4}>LBG CloudPulse-Dashboard</Typography>
+      <Typography variant="h5" fontWeight="bold" mb={4}>LBG CloudPulse-Dashboard</Typography>
       
       {/* Centered Loading, Error and Retry Button */}
       <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ mb: 2 }}>
