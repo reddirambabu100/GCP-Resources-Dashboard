@@ -105,7 +105,7 @@ const Utilization = () => {
         {apiStatus === apiStatusConstants.FAILURE && (
           <>
             <Alert severity="error">{error}</Alert>
-            <Button variant="contained" color="primary" onClick={fetchData} sx={{ marginTop: 2 }}>
+            <Button variant="contained"  onClick={fetchData} sx={{ marginTop: 2, backgroundColor:"#006a4d"}}>
               Retry
             </Button>
           </>
@@ -113,20 +113,20 @@ const Utilization = () => {
       </Box>
 
       {apiStatus === apiStatusConstants.SUCCESS && Object.keys(utilizationData).map((project) => (
-        <Accordion key={project} defaultExpanded>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="h6">{project}</Typography>
+        <Accordion key={project} defaultExpanded sx={{backgroundColor:"#006a4d"}} color="white">
+          <AccordionSummary expandIcon={<ExpandMoreIcon sx={{color:"white", borderRadius:"10"}}/>}>
+            <Typography variant="h6" fontWeight={"bold"} color="white">{project}</Typography>
           </AccordionSummary>
 
           <AccordionDetails>
             {Object.keys(utilizationData[project]).map((resource) => (
               <Paper key={resource} sx={{ mb: 3, p: 2 }}>
-                <Typography variant="subtitle1" sx={{ mb: 2 }}>
+                <Typography variant="subtitle1" sx={{ mb: 2 }} fontWeight={"bold"}>
                   {resource}
                 </Typography>
 
                 {/* CPU Usage */}
-                <Typography variant="subtitle2" sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" sx={{ mb: 2 }} fontWeight={"bold"}>
                   CPU Usage (%)
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>
@@ -146,7 +146,7 @@ const Utilization = () => {
             </ResponsiveContainer>
 
                 {/* Memory Usage */}
-                <Typography variant="subtitle2" sx={{ mb: 2, mt: 3 }}>
+                <Typography variant="subtitle2" sx={{ mb: 2, mt: 3 }} fontWeight={"bold"}>
                   Memory Usage (%)
                 </Typography>
                 <ResponsiveContainer width="100%" height={300}>

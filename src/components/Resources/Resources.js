@@ -126,11 +126,11 @@ const ResourcesDashboard = () => {
       <Typography variant="h5" mb={4} fontWeight="bold">LBG CloudPulse Resources</Typography>
        {/* Centered Loading, Error and Retry Button */}
        <Box display="flex" justifyContent="center" alignItems="center" flexDirection="column" sx={{ mb: 2 }}>
-        {apiStatus === apiStatusConstants.IN_PROGRESS && <CircularProgress />}
+       {apiStatus === apiStatusConstants.IN_PROGRESS && <CircularProgress />}
         {apiStatus === apiStatusConstants.FAILURE && (
           <>
             <Alert severity="error">{error}</Alert>
-            <Button variant="contained" color="primary" onClick={fetchData} sx={{ marginTop: 2 }}>
+            <Button variant="contained" onClick={fetchData} sx={{ marginTop: 2, backgroundColor:"#006a4d" }}>
               Retry
             </Button>
           </>
@@ -173,11 +173,14 @@ const ResourcesDashboard = () => {
         <MenuItem value="Available">Available</MenuItem>
         <MenuItem value="Pending">Pending</MenuItem>
       </Select>
+
       {Object.keys(groupedByService).map((service) => {
         const page = pagination[service]?.page || 0;
         const rowsPerPage = pagination[service]?.rowsPerPage || 5;
         const serviceResources = groupedByService[service];
+
         return (
+
           <Paper key={service} sx={{ mb: 3, p: 2, backgroundColor:"#006a4d" }}>
             <Typography variant="p1" fontWeight={"bold"} color="white">
               <IconButton onClick={() => toggleService(service)}>
@@ -232,6 +235,7 @@ const ResourcesDashboard = () => {
             </Collapse>
           </Paper>
         );
+
       })}
     </Container>
   );
